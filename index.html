@@ -22,12 +22,12 @@
     --gray:#9aa5b8; --green:#6cc383; --blue:#6aa0f5;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body)}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
 /* hero */
 .hero{padding:56px 0 28px}
@@ -39,30 +39,30 @@ a{color:inherit}
 h1{font:700 clamp(30px,6vw,60px)/1.05 var(--head);color:var(--sky);margin:0 0 18px;letter-spacing:-.02em}
 .lead{max-width:60ch;color:var(--muted);margin:0 0 28px}
 
-/* GS finder */
-.finder{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:16px 18px}
-.finder label{font-weight:600}
-.finder input{width:170px;font:700 24px var(--head);color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:6px 14px;-moz-appearance:textfield;appearance:textfield}
-.finder input::-webkit-outer-spin-button,.finder input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-#result{flex:1 1 260px;margin:0;color:var(--muted)}
+/* GS panel */
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:0 44px;align-items:start}
+.side{position:sticky;top:16px;background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:16px;max-height:calc(100vh - 32px);overflow:auto}
+.side label{display:block;font-weight:600;margin-bottom:6px}
+.side input{width:100%;font:700 24px var(--head);color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:6px 14px;-moz-appearance:textfield;appearance:textfield}
+.side input::-webkit-outer-spin-button,.side input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#result{margin:10px 0 14px;color:var(--muted);font-size:14px;line-height:1.4}
 #result b{color:var(--ink)}
-
-/* route bar */
-.route{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--ink)}
-.route ol{list-style:none;margin:0;padding:0;display:flex;overflow-x:auto}
-.route li{flex:1 0 auto}
-.route a{display:block;padding:12px 16px;text-decoration:none;font:500 13px var(--head);white-space:nowrap;border-right:1px solid var(--line);color:var(--muted)}
-.route a:hover{color:var(--ink)}
-.route li.cur a{background:var(--ink);color:var(--bg)}
+.side ol{list-style:none;margin:0;padding:10px 0 0;border-top:1px solid var(--line)}
+.side li a{display:block;padding:8px 10px;margin-top:4px;border-radius:8px;text-decoration:none;color:var(--ink)}
+.side li a span{display:block;font:700 15px var(--head)}
+.side li a small{display:block;font-size:13px;color:var(--muted)}
+.side li a:hover{background:var(--gold-bg)}
+.side li.cur a{background:var(--ink);color:var(--bg)}
+.side li.cur a small{color:var(--line)}
 
 /* stages */
-.stage{display:grid;grid-template-columns:240px 1fr;gap:28px 48px;padding:48px 0;border-bottom:1px solid var(--line)}
+.stage{display:block;padding:48px 0;border-bottom:1px solid var(--line)}
 .stage.cur{background:linear-gradient(90deg,var(--gold-bg),transparent 70%);margin:0 -20px;padding-left:20px;padding-right:20px}
-.range{position:sticky;top:96px;align-self:start}
+.range{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin-bottom:14px}
 .range .gs{font:700 clamp(30px,4.4vw,44px)/1 var(--head);color:var(--sky);display:block;letter-spacing:-.03em}
-.range .next{display:block;margin-top:12px;color:var(--muted);font-size:15px}
+.range .next{display:block;margin-top:0;color:var(--muted);font-size:15px}
 .range .next b{color:var(--gold);font-family:var(--head);font-weight:700}
-.here{display:none;margin-top:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;padding:4px 10px;border-radius:99px;width:max-content}
+.here{display:none;margin-top:0;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;padding:4px 10px;border-radius:99px;width:max-content}
 .stage.cur .here{display:block}
 h2{font:700 clamp(22px,3vw,30px)/1.15 var(--head);color:var(--sky);margin:0 0 6px}
 .sub{margin:0 0 24px;color:var(--muted)}
@@ -97,11 +97,19 @@ h2{font:700 clamp(22px,3vw,30px)/1.15 var(--head);color:var(--sky);margin:0 0 6p
 footer{border-top:2px solid var(--ink);padding:24px 0 48px;font-size:15px;color:var(--muted)}
 footer a{color:var(--gold);font-weight:600}
 
-@media (max-width:760px){
-  .stage{grid-template-columns:1fr;gap:16px;padding:36px 0}
-  .range{position:static}
+@media (max-width:900px){
+  html{scroll-padding-top:130px}
+  .layout{display:block}
+  .side{top:0;margin:0 -20px;border-width:0 0 2px;border-radius:0;padding:8px 20px;max-height:none;overflow:visible;z-index:5}
+  .side label{display:none}
+  .gsrow{display:flex;align-items:center;gap:10px}
+  .side input{width:130px;flex:none;font-size:20px;padding:4px 12px}
+  #result{margin:0;font-size:13px}
+  .side ol{display:flex;overflow-x:auto;gap:6px;padding:8px 0 0;margin-top:8px}
+  .side li a{margin:0;white-space:nowrap}
+  .side li a small{display:none}
+  .stage{padding:36px 0}
   .pick{grid-template-columns:1fr}
-  .stage.cur{margin:0 -20px}
 }
 </style>
 </head>
@@ -112,18 +120,21 @@ footer a{color:var(--gold);font-weight:600}
   <p class="by">Гайд от <a href="https://t.me/wand_and_stuff" rel="noopener">FoxicTail</a> · карта маршрута от 09.10.2026</p>
   <h1>AION 2: от старта до 2100&nbsp;ГС</h1>
   <p class="lead">Контент открывается по порогам гирскора, и на каждом этапе меняется главный источник усиления: сначала карта и задания, затем экипировка и арканы. Боевой мощью и полезными эффектами занимайтесь параллельно: одна цифра ГС не показывает всю силу персонажа.</p>
-  <div class="finder">
-    <label for="gs">Ваш ГС</label>
+</header>
+
+<div class="wrap layout">
+<aside class="side" aria-label="Ваш ГС и этапы">
+  <label for="gs">Ваш ГС</label>
+  <div class="gsrow">
     <input id="gs" type="number" inputmode="numeric" min="0" max="3000" placeholder="1250">
     <p id="result">Введите гирскор, и мы покажем ваш этап и ближайшую цель.</p>
   </div>
-</header>
+  <ol id="nav"></ol>
+</aside>
+<div class="content">
+<main id="stages"></main>
 
-<nav class="route" aria-label="Этапы маршрута"><div class="wrap"><ol id="nav"></ol></div></nav>
-
-<main class="wrap" id="stages"></main>
-
-<section class="wrap finale" id="done">
+<section class="finale" id="done" data-i="6">
   <h2>2100 ГС: новый тир открыт</h2>
   <p>Выбирайте данж по тому, какие слоты нужно усилить. Планируете крафтить оружие?</p>
   <div class="pick">
@@ -132,6 +143,8 @@ footer a{color:var(--gold);font-weight:600}
   </div>
   <p class="tip">Дальше — качество экипировки: улучшайте полезные эффекты, камни и реальные боевые характеристики. Следующий данж выбирайте по слабым слотам.</p>
 </section>
+</div>
+</div>
 
 <footer>
   <div class="wrap">
@@ -192,7 +205,7 @@ const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
 STAGES.forEach((s,i)=>{
   const id='stage'+(i+1), range=s.from?`${s.from}–${s.to}`:`до ${s.to}`;
-  nav.insertAdjacentHTML('beforeend',`<li data-i="${i}"><a href="#${id}">${range}</a></li>`);
+  nav.insertAdjacentHTML('beforeend',`<li data-i="${i}"><a href="#${id}"><span>${range}</span><small>${esc(s.title)}</small></a></li>`);
   let h=`<section class="stage" id="${id}" data-i="${i}"><div class="range"><span class="gs">${range}</span>
     <span class="next">${s.to}: <b>${esc(s.goal)}</b></span><span class="here">Вы здесь</span></div><div>
     <h2>${esc(s.title)}</h2><p class="sub">${esc(s.sub)}</p>`;
@@ -204,19 +217,23 @@ STAGES.forEach((s,i)=>{
   box.insertAdjacentHTML('beforeend',h+'</div></section>');
 });
 
+nav.insertAdjacentHTML('beforeend','<li data-i="6"><a href="#done"><span>2100+</span><small>Новый тир</small></a></li>');
 const input=document.getElementById('gs'), result=document.getElementById('result');
 function mark(v){
   document.querySelectorAll('[data-i]').forEach(e=>e.classList.remove('cur'));
-  if(isNaN(v)||v<0){result.textContent='Введите гирскор, и мы покажем ваш этап и ближайшую цель.';return;}
+  if(isNaN(v)||v<0){result.textContent='Введите гирскор, и мы покажем ваш этап и ближайшую цель.';return -1;}
   let i=STAGES.findIndex(s=>v<s.to);
-  if(i<0){result.innerHTML='<b>2100+ ГС</b>: маршрут пройден. Смотрите блок «Новый тир открыт» ниже.';return;}
+  if(i<0){i=STAGES.length;result.innerHTML='<b>2100+ ГС</b>: маршрут пройден. Новый тир ниже.';}
+  else{const s=STAGES[i];result.innerHTML=`Этап <b>${i+1}: ${esc(s.title)}</b>. До ${s.to} ГС осталось <b>${s.to-v}</b>, откроется: ${esc(s.goal)}.`;}
   document.querySelectorAll(`[data-i="${i}"]`).forEach(e=>e.classList.add('cur'));
-  const s=STAGES[i];
-  result.innerHTML=`Этап <b>${i+1}: ${esc(s.title)}</b>. До ${s.to} ГС осталось <b>${s.to-v}</b>, откроется: ${esc(s.goal)}.`;
+  return i;
 }
+let timer;
+function go(i){const el=document.getElementById(i<STAGES.length?'stage'+(i+1):'done');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 input.addEventListener('input',()=>{
-  const v=parseInt(input.value,10); mark(v);
+  const v=parseInt(input.value,10), i=mark(v);
   try{isNaN(v)?localStorage.removeItem('aion2gs'):localStorage.setItem('aion2gs',v)}catch(e){}
+  clearTimeout(timer); if(i>=0) timer=setTimeout(()=>go(i),350);
 });
 const tb=document.getElementById('theme');
 let th='light';
