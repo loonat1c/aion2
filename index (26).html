@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AION 2: PvE-маршрут от старта до 2100 ГС — by FoxicTail</title>
+<meta name="description" content="Порядок развития персонажа в AION 2: шесть этапов от старта до 2100 ГС. Автор гайда — FoxicTail.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --panel:#eaf3ff; --ink:#14327a; --muted:#4d6288; --line:#c4dbf7;
+  --gold:#a8771a; --sky:#1493f5; --gold-bg:#dcecff; --warn:#a63a2b; --warn-bg:#f6dcd6;
+  --gray:#8590a3; --green:#3f8a52; --blue:#2e6bd0;
+  --head:'Unbounded','Arial Black',sans-serif; --body:'Onest','Segoe UI',Arial,sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#0f1830; --panel:#16223f; --ink:#e7ecf6; --muted:#9aa9c6; --line:#2b3a5c;
+    --gold:#e3b653; --sky:#5cc0ff; --gold-bg:#17305c; --warn:#f08a79; --warn-bg:#3b1f1b;
+    --gray:#9aa5b8; --green:#6cc383; --blue:#6aa0f5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* hero */
+.hero{padding:56px 0 28px}
+.hero{position:relative}
+.theme{position:absolute;top:16px;right:20px;font:500 14px var(--body);color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer}
+.theme:hover{border-color:var(--ink)}
+.by{font-size:15px;color:var(--muted);margin:0 0 14px}
+.by a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
+h1{font:700 clamp(30px,6vw,60px)/1.05 var(--head);color:var(--sky);margin:0 0 18px;letter-spacing:-.02em}
+.lead{max-width:60ch;color:var(--muted);margin:0 0 28px}
+
+/* GS finder */
+.finder{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:16px 18px}
+.finder label{font-weight:600}
+.finder input{width:170px;font:700 24px var(--head);color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:6px 14px;-moz-appearance:textfield;appearance:textfield}
+.finder input::-webkit-outer-spin-button,.finder input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#result{flex:1 1 260px;margin:0;color:var(--muted)}
+#result b{color:var(--ink)}
+
+/* route bar */
+.route{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--ink)}
+.route ol{list-style:none;margin:0;padding:0;display:flex;overflow-x:auto}
+.route li{flex:1 0 auto}
+.route a{display:block;padding:12px 16px;text-decoration:none;font:500 13px var(--head);white-space:nowrap;border-right:1px solid var(--line);color:var(--muted)}
+.route a:hover{color:var(--ink)}
+.route li.cur a{background:var(--ink);color:var(--bg)}
+
+/* stages */
+.stage{display:grid;grid-template-columns:240px 1fr;gap:28px 48px;padding:48px 0;border-bottom:1px solid var(--line)}
+.stage.cur{background:linear-gradient(90deg,var(--gold-bg),transparent 70%);margin:0 -20px;padding-left:20px;padding-right:20px}
+.range{position:sticky;top:96px;align-self:start}
+.range .gs{font:700 clamp(30px,4.4vw,44px)/1 var(--head);color:var(--sky);display:block;letter-spacing:-.03em}
+.range .next{display:block;margin-top:12px;color:var(--muted);font-size:15px}
+.range .next b{color:var(--gold);font-family:var(--head);font-weight:700}
+.here{display:none;margin-top:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;padding:4px 10px;border-radius:99px;width:max-content}
+.stage.cur .here{display:block}
+h2{font:700 clamp(22px,3vw,30px)/1.15 var(--head);color:var(--sky);margin:0 0 6px}
+.sub{margin:0 0 24px;color:var(--muted)}
+.steps{margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 20px 46px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font:700 13px var(--head)}
+.steps h3{margin:0 0 2px;font-size:18px}
+.steps p{margin:0;color:var(--muted)}
+.note{border-left:5px solid var(--gold);background:var(--gold-bg);padding:12px 16px;border-radius:0 10px 10px 0;margin:6px 0 0}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}
+.note b{display:block}
+.note p{margin:2px 0 0}
+.targets{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:0 0 22px}
+.targets div{border:2px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel)}
+.targets span{display:block;font-size:13px;color:var(--muted)}
+.targets strong{font:700 20px var(--head)}
+.rar{display:flex;gap:10px;margin:0 0 22px}
+.rar div{flex:1;border-radius:10px;padding:12px;background:var(--panel);border:2px solid var(--c);text-align:center}
+.rar span{display:block;font-size:13px;color:var(--muted)}
+.rar strong{font:700 24px var(--head);color:var(--c)}
+.tip{margin:14px 0 0;font-size:15px;color:var(--muted)}
+
+/* finale */
+.finale{padding:56px 0}
+.finale h2{margin-bottom:8px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.pick div{border:2px solid var(--ink);border-radius:14px;padding:20px;background:var(--panel)}
+.pick small{color:var(--muted);display:block;margin-bottom:6px}
+.pick h3{font:700 22px var(--head);margin:0 0 2px}
+.pick em{font-style:normal;color:var(--gold);font-weight:600}
+.pick p{margin:10px 0 0}
+footer{border-top:2px solid var(--ink);padding:24px 0 48px;font-size:15px;color:var(--muted)}
+footer a{color:var(--gold);font-weight:600}
+
+@media (max-width:760px){
+  .stage{grid-template-columns:1fr;gap:16px;padding:36px 0}
+  .range{position:static}
+  .pick{grid-template-columns:1fr}
+  .stage.cur{margin:0 -20px}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <button id="theme" class="theme" type="button">Тёмная тема</button>
+  <p class="by">Гайд от <a href="https://t.me/wand_and_stuff" rel="noopener">FoxicTail</a> · карта маршрута от 09.10.2026</p>
+  <h1>AION 2: от старта до 2100&nbsp;ГС</h1>
+  <p class="lead">Контент открывается по порогам гирскора, и на каждом этапе меняется главный источник усиления: сначала карта и задания, затем экипировка и арканы. Боевой мощью и полезными эффектами занимайтесь параллельно: одна цифра ГС не показывает всю силу персонажа.</p>
+  <div class="finder">
+    <label for="gs">Ваш ГС</label>
+    <input id="gs" type="number" inputmode="numeric" min="0" max="3000" placeholder="1250">
+    <p id="result">Введите гирскор, и мы покажем ваш этап и ближайшую цель.</p>
+  </div>
+</header>
+
+<nav class="route" aria-label="Этапы маршрута"><div class="wrap"><ol id="nav"></ol></div></nav>
+
+<main class="wrap" id="stages"></main>
+
+<section class="wrap finale" id="done">
+  <h2>2100 ГС: новый тир открыт</h2>
+  <p>Выбирайте данж по тому, какие слоты нужно усилить. Планируете крафтить оружие?</p>
+  <div class="pick">
+    <div><small>Нет</small><h3>Кромеда</h3><em>Fire Temple</em><p>Фармите оружие и бижутерию.</p></div>
+    <div><small>Да</small><h3>Собака</h3><em>Ferocious Horn Den</em><p>Фармите броню и дополнительный предмет.</p></div>
+  </div>
+  <p class="tip">Дальше — качество экипировки: улучшайте полезные эффекты, камни и реальные боевые характеристики. Следующий данж выбирайте по слабым слотам.</p>
+</section>
+
+<footer>
+  <div class="wrap">
+    Автор гайда — <a href="https://t.me/wand_and_stuff" rel="noopener">FoxicTail</a>, телеграм-канал t.me/wand_and_stuff.
+    Перед входом сверяйте порог и название режима в своём клиенте.
+  </div>
+</footer>
+
+<script>
+const STAGES = [
+ {from:0,to:1000,title:'Сюжет и карта',sub:'Проходим задания и собираем стартовое снаряжение.',goal:'Бездна',
+  steps:[
+   ['Идите по сюжету','Основные задания — золотые и красные. Если прогресс заблокирован, закройте активности текущей локации.'],
+   ['Доберите зелёные задания и «?»','Они дают стартовые вещи и руны. Прежде всего заполните пустые слоты снаряжения.'],
+   ['Наденьте две стартовые руны','Получите обе за региональные задания. Усильте до +1 и остановитесь.'],
+   ['Точите полезные синие вещи','Используйте синие квестовые вещи 41–43 уровня. Более ранние предметы скоро замените.']],
+  note:['warn','Руны выше +1 могут сломаться','Неудачная попытка на +2 и выше уничтожает руну. Потеряете предмет и его вклад в ГС.'],
+  tip:'ALT + номер задания — автопуть к цели. Энергию на кубы ранних данжей бережём до 1400 ГС.'},
+ {from:1000,to:1400,title:'Перья и усиления',sub:'Закрываем карту и развиваем постоянные системы.',goal:'новые данжи',
+  targets:[['Оружие','+10'],['Броня','+5–6'],['Бижутерия 43 ур.','+6'],['Монолит Бездны','ур. 16']],
+  steps:[
+   ['Завершите сюжетный шаг в Бездне','Получите браслет и усильте его до +10. Соберите перья Бездны и сдайте их монолиту.'],
+   ['Доведите пояс и амулет до золота','Усильте текущую редкость до +10, затем повысьте её через преобразование. Повторите до золотого грейда.'],
+   ['Вложите плитки в Даэванион','Используйте полученные очки. Посетите разлом: дополнительные задания дают плитки, «?» — материалы заточки.'],
+   ['Поставьте недорогие камни','Камни маны и духовные камни — в подходящие вещи; божественные камни — в оружие.']],
+  tip:'Шуго: ключи на фестиваль, валюту — на плитки и стигмы. Разлом: на чужой карте — 1 час, следите за таймером у миникарты.'},
+ {from:1400,to:1600,title:'Данжи и гаранты',sub:'Энергию направляем в экипировку нового тира.',goal:'Возвышение I',
+  steps:[
+   ['Начните с Вакрона: «Покорение»','Вакрон даёт броню и дополнительный предмет. Гарант — после 21 получения награды из куба. Подходящие выпавшие вещи сразу надевайте.'],
+   ['Доберите гарант в «Исследовании»','Откройте куб 3 раза ради гарантированной награды. Выберите предмет в слот, который не закрыл случайный дроп.'],
+   ['Перейдите к Уругугу','Уругугу даёт оружие и бижутерию. Гарант тратьте на недостающий слот; не добивайте полный сет ради самого сета.']],
+  note:['','Сначала дроп, затем выбор из гаранта','Новые золотые вещи — к +10 и с недорогими камнями маны. Перед переходом проверьте итоговый ГС.'],
+  tip:'Дополнительно: Кошмар — плитки; Шуго — ресурсы и вещи; мировые боссы — шанс на золотую экипировку.'},
+ {from:1600,to:1900,title:'Первые арканы',sub:'Возвышение (Transcendence), этап I. Первая задача — карта в каждом из пяти слотов.',goal:'Возвышение II',
+  steps:[
+   ['Пройдите оба данжа Возвышения I','У них разные наборы аркан. Это поможет заполнить все пять слотов, а не повторять один и тот же дроп.'],
+   ['Сначала заполните слоты','Поставьте доступные карты. Серые уже полезны; зелёные дадут больше ГС. Идеальные эффекты подберёте позже.'],
+   ['Если до 1900 ещё не хватает','Доберите золотые вещи на Вакроне и Уругугу, их заточку и камни. Купите плитки за валюту Шуго и Кошмара.']],
+  note:['','Приоритет: пустой слот → доступная аркана → повышение редкости','Не сливайте всю энергию в поисках идеальной карты первого этапа.']},
+ {from:1900,to:2000,title:'Синие арканы',sub:'Возвышение (Transcendence), этап II.',goal:'сложная Битва пробуждения',
+  rar:[['Серая','+20','--gray'],['Зелёная','+40','--green'],['Синяя','+60','--blue']],rarCap:'Вклад одной арканы в ГС до заточки',
+  steps:[
+   ['Перейдите на второй этап Возвышения','Теперь в дропе появляются синие арканы. Проходите оба данжа, чтобы улучшать разные слоты.'],
+   ['Меняйте карты на более редкие','Замена серой на синюю даёт +40 ГС; зелёной на синюю — +20 ГС до усиления карты.']],
+  note:['','До цели — ещё 100 ГС','Если не хватает нескольких очков, проверьте заточку вещей, камни и неиспользованные плитки Даэваниона.'],
+  tip:'Названия: Возвышение = Transcendence. Битва пробуждения = Ascension Trial.'},
+ {from:2000,to:2100,title:'Золотая аркана',sub:'Битва пробуждения (Ascension Trial), сложный уровень.',goal:'следующий тир',
+  targets:[['За испытание','3 кристалла'],['Добрать','+2 кристалла'],['Для крафта','5 таинственных кристаллов']],
+  steps:[
+   ['Наберите 4000+ очков на сложном уровне','Заберите три кристалла из сезонных наград за результат испытания.'],
+   ['Доберите оставшиеся кристаллы','Купите кристаллы в сезонном магазине. Если доступна одна покупка, второй кристалл получите извлечением лишних аркан.'],
+   ['Создайте золотую аркану','Для ускорения — Chalice of Vigor. Крафт с одним выбранным эффектом: 5 кристаллов и кинары по рецепту.']],
+  note:['warn','Не получается набрать 4000+?','Продолжайте Возвышение II: меняйте карты на синие и усиливайте их. Крафт — способ ускориться на этом отрезке.']}
+];
+
+const nav=document.getElementById('nav'), box=document.getElementById('stages');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+STAGES.forEach((s,i)=>{
+  const id='stage'+(i+1), range=s.from?`${s.from}–${s.to}`:`до ${s.to}`;
+  nav.insertAdjacentHTML('beforeend',`<li data-i="${i}"><a href="#${id}">${range}</a></li>`);
+  let h=`<section class="stage" id="${id}" data-i="${i}"><div class="range"><span class="gs">${range}</span>
+    <span class="next">${s.to}: <b>${esc(s.goal)}</b></span><span class="here">Вы здесь</span></div><div>
+    <h2>${esc(s.title)}</h2><p class="sub">${esc(s.sub)}</p>`;
+  if(s.targets) h+='<div class="targets">'+s.targets.map(t=>`<div><span>${t[0]}</span><strong>${t[1]}</strong></div>`).join('')+'</div>';
+  if(s.rar) h+=`<p class="sub" style="margin-bottom:8px">${s.rarCap}</p><div class="rar">`+s.rar.map(r=>`<div style="--c:var(${r[2]})"><span>${r[0]}</span><strong>${r[1]}</strong></div>`).join('')+'</div>';
+  h+='<ol class="steps">'+s.steps.map(t=>`<li><h3>${esc(t[0])}</h3><p>${esc(t[1])}</p></li>`).join('')+'</ol>';
+  if(s.note) h+=`<div class="note ${s.note[0]}"><b>${esc(s.note[1])}</b><p>${esc(s.note[2])}</p></div>`;
+  if(s.tip) h+=`<p class="tip">${esc(s.tip)}</p>`;
+  box.insertAdjacentHTML('beforeend',h+'</div></section>');
+});
+
+const input=document.getElementById('gs'), result=document.getElementById('result');
+function mark(v){
+  document.querySelectorAll('[data-i]').forEach(e=>e.classList.remove('cur'));
+  if(isNaN(v)||v<0){result.textContent='Введите гирскор, и мы покажем ваш этап и ближайшую цель.';return;}
+  let i=STAGES.findIndex(s=>v<s.to);
+  if(i<0){result.innerHTML='<b>2100+ ГС</b>: маршрут пройден. Смотрите блок «Новый тир открыт» ниже.';return;}
+  document.querySelectorAll(`[data-i="${i}"]`).forEach(e=>e.classList.add('cur'));
+  const s=STAGES[i];
+  result.innerHTML=`Этап <b>${i+1}: ${esc(s.title)}</b>. До ${s.to} ГС осталось <b>${s.to-v}</b>, откроется: ${esc(s.goal)}.`;
+}
+input.addEventListener('input',()=>{
+  const v=parseInt(input.value,10); mark(v);
+  try{isNaN(v)?localStorage.removeItem('aion2gs'):localStorage.setItem('aion2gs',v)}catch(e){}
+});
+const tb=document.getElementById('theme');
+let th='light';
+try{th=localStorage.getItem('aion2theme')||'light'}catch(e){}
+function setTheme(t){document.documentElement.dataset.theme=t;tb.textContent=t==='dark'?'Светлая тема':'Тёмная тема';}
+setTheme(th);
+tb.addEventListener('click',()=>{th=th==='dark'?'light':'dark';setTheme(th);try{localStorage.setItem('aion2theme',th)}catch(e){}});
+try{const saved=localStorage.getItem('aion2gs'); if(saved){input.value=saved;mark(parseInt(saved,10));}}catch(e){}
+</script>
+</body>
+</html>
