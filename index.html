@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,14 +11,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --panel:#eaf3ff; --ink:#14327a; --muted:#4d6288; --line:#c4dbf7;
-  --gold:#a8771a; --sky:#1493f5; --gold-bg:#dcecff; --warn:#a63a2b; --warn-bg:#f6dcd6;
+  --bg:#ffffff; --panel:#ffffff; --ink:#14327a; --muted:#4d6288; --line:#dde1ea; --plate:#14327a;
+  --gold:#a8771a; --sky:#14327a; --gold-bg:#f8f1de; --warn:#a63a2b; --warn-bg:#f6dcd6;
   --gray:#8590a3; --green:#3f8a52; --blue:#2e6bd0;
   --head:'Unbounded','Arial Black',sans-serif; --body:'Onest','Segoe UI',Arial,sans-serif;
 }
 :root[data-theme="dark"]{
   --bg:#0f1830; --panel:#16223f; --ink:#e7ecf6; --muted:#9aa9c6; --line:#2b3a5c;
-    --gold:#e3b653; --sky:#5cc0ff; --gold-bg:#17305c; --warn:#f08a79; --warn-bg:#3b1f1b;
+    --gold:#e3b653; --sky:#e7ecf6; --gold-bg:#2f2a18; --plate:#1c3a82; --warn:#f08a79; --warn-bg:#3b1f1b;
     --gray:#9aa5b8; --green:#6cc383; --blue:#6aa0f5;
 }
 *{box-sizing:border-box}
@@ -30,34 +30,37 @@ a{color:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
 /* hero */
-.hero{padding:56px 0 28px}
-.hero{position:relative}
-.theme{position:absolute;top:16px;right:20px;font:500 14px var(--body);color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer}
+.hero{padding:48px 0 12px}
+.hero .inner{position:relative;padding-right:76px}
+.theme{position:absolute;top:0;right:20px;width:40px;height:40px;padding:0;display:grid;place-items:center;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:50%;cursor:pointer}
+.theme svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .theme:hover{border-color:var(--ink)}
 .by{font-size:15px;color:var(--muted);margin:0 0 14px}
 .by a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
 h1{font:700 clamp(30px,6vw,60px)/1.05 var(--head);color:var(--sky);margin:0 0 18px;letter-spacing:-.02em}
-.lead{max-width:60ch;color:var(--muted);margin:0 0 28px}
+.lead{max-width:60ch;color:var(--muted);margin:0}
 
 /* GS panel */
-.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:0 44px;align-items:start}
-.side{position:sticky;top:16px;background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:16px;max-height:calc(100vh - 32px);overflow:auto}
+.layout{display:grid;grid-template-columns:266px minmax(0,1fr);gap:0;align-items:start}
+.content{padding-left:36px}
+.side{position:sticky;top:16px;margin:48px 36px 0 0;background:var(--plate);color:#fff;border-radius:16px;padding:18px;max-height:calc(100vh - 32px);overflow:auto}
 .side label{display:block;font-weight:600;margin-bottom:6px}
-.side input{width:100%;font:700 24px var(--head);color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:6px 14px;-moz-appearance:textfield;appearance:textfield}
+.side input{width:100%;font:700 24px var(--head);color:#14327a;background:#fff;border:0;border-radius:10px;padding:8px 14px;-moz-appearance:textfield;appearance:textfield}
 .side input::-webkit-outer-spin-button,.side input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-#result{margin:10px 0 14px;color:var(--muted);font-size:14px;line-height:1.4}
-#result b{color:var(--ink)}
-.side ol{list-style:none;margin:0;padding:10px 0 0;border-top:1px solid var(--line)}
-.side li a{display:block;padding:8px 10px;margin-top:4px;border-radius:8px;text-decoration:none;color:var(--ink)}
+#result{margin:10px 0 14px;color:rgba(255,255,255,.78);font-size:14px;line-height:1.4}
+#result b{color:#fff}
+.side ol{list-style:none;margin:0;padding:10px 0 0;border-top:1px solid rgba(255,255,255,.22)}
+.side li a{display:block;padding:8px 10px;margin-top:4px;border-radius:8px;text-decoration:none;color:#fff}
 .side li a span{display:block;font:700 15px var(--head)}
-.side li a small{display:block;font-size:13px;color:var(--muted)}
-.side li a:hover{background:var(--gold-bg)}
-.side li.cur a{background:var(--ink);color:var(--bg)}
-.side li.cur a small{color:var(--line)}
+.side li a small{display:block;font-size:13px;color:rgba(255,255,255,.68)}
+.side li a:hover{background:rgba(255,255,255,.12)}
+.side li.cur a{background:#fff;color:#14327a}
+.side li.cur a small{color:#4d6288}
+.side input:focus-visible,.side a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
 /* stages */
 .stage{display:block;padding:48px 0;border-bottom:1px solid var(--line)}
-.stage.cur{background:linear-gradient(90deg,var(--gold-bg),transparent 70%);margin:0 -20px;padding-left:20px;padding-right:20px}
+.stage.cur{background:linear-gradient(90deg,var(--gold-bg),transparent 70%);margin-left:-24px;padding-left:24px;box-shadow:inset 5px 0 0 var(--gold)}
 .range{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin-bottom:14px}
 .range .gs{font:700 clamp(30px,4.4vw,44px)/1 var(--head);color:var(--sky);display:block;letter-spacing:-.03em}
 .range .next{display:block;margin-top:0;color:var(--muted);font-size:15px}
@@ -94,12 +97,15 @@ h2{font:700 clamp(22px,3vw,30px)/1.15 var(--head);color:var(--sky);margin:0 0 6p
 .pick h3{font:700 22px var(--head);margin:0 0 2px}
 .pick em{font-style:normal;color:var(--gold);font-weight:600}
 .pick p{margin:10px 0 0}
-footer{border-top:2px solid var(--ink);padding:24px 0 48px;font-size:15px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 48px;font-size:15px;color:var(--muted)}
 footer a{color:var(--gold);font-weight:600}
 
 @media (max-width:900px){
   html{scroll-padding-top:130px}
   .layout{display:block}
+  .content{border-left:0;padding-left:0}
+  .hero{padding:24px 0 22px}
+  .stage.cur{margin:0 -20px;padding:36px 20px}
   .side{top:0;margin:0 -20px;border-width:0 0 2px;border-radius:0;padding:8px 20px;max-height:none;overflow:visible;z-index:5}
   .side label{display:none}
   .gsrow{display:flex;align-items:center;gap:10px}
@@ -115,12 +121,12 @@ footer a{color:var(--gold);font-weight:600}
 </head>
 <body>
 
-<header class="wrap hero">
-  <button id="theme" class="theme" type="button">Тёмная тема</button>
+<header class="hero"><div class="wrap inner">
+  <button id="theme" class="theme" type="button" aria-label="Тёмная тема" title="Тёмная тема"></button>
   <p class="by">Гайд от <a href="https://t.me/wand_and_stuff" rel="noopener">FoxicTail</a> · карта маршрута от 09.10.2026</p>
   <h1>AION 2: от старта до 2100&nbsp;ГС</h1>
   <p class="lead">Контент открывается по порогам гирскора, и на каждом этапе меняется главный источник усиления: сначала карта и задания, затем экипировка и арканы. Боевой мощью и полезными эффектами занимайтесь параллельно: одна цифра ГС не показывает всю силу персонажа.</p>
-</header>
+</div></header>
 
 <div class="wrap layout">
 <aside class="side" aria-label="Ваш ГС и этапы">
@@ -238,7 +244,9 @@ input.addEventListener('input',()=>{
 const tb=document.getElementById('theme');
 let th='light';
 try{th=localStorage.getItem('aion2theme')||'light'}catch(e){}
-function setTheme(t){document.documentElement.dataset.theme=t;tb.textContent=t==='dark'?'Светлая тема':'Тёмная тема';}
+const MOON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>';
+const SUN='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>';
+function setTheme(t){document.documentElement.dataset.theme=t;const l=t==='dark'?'Светлая тема':'Тёмная тема';tb.innerHTML=t==='dark'?SUN:MOON;tb.title=l;tb.setAttribute('aria-label',l);}
 setTheme(th);
 tb.addEventListener('click',()=>{th=th==='dark'?'light':'dark';setTheme(th);try{localStorage.setItem('aion2theme',th)}catch(e){}});
 try{const saved=localStorage.getItem('aion2gs'); if(saved){input.value=saved;mark(parseInt(saved,10));}}catch(e){}
